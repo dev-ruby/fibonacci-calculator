@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>Fibonacci Calculator</title>
+
+    <!-- Noto Sans KR Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+
+    <script>
+        function calculateFibonacci() {
+            function fibo(n) {
+                function matrix_multiply(a, b) {
+                    const res = [
+                        [0n, 0n],
+                        [0n, 0n]
+                    ];
+                    for (let i = 0; i < 2; i++) {
+                        for (let j = 0; j < 2; j++) {
+                            for (let k = 0; k < 2; k++) {
+                                res[i][j] += (a[i][k] * b[k][j]);
+                            }
+                        }
+                    }
+                    return res;
+                }
+                n = BigInt(n).toString(2);
+                let base = [
+                    [1n, 1n],
+                    [1n, 0n]
+                ];
+                let result = [
+                    [1n, 0n],
+                    [0n, 1n]
+                ];
+                for (let i = 1; i <= n.length; i++) {
+                    if (n.charAt(n.length - i) === '1') {
+                        result = matrix_multiply(result, base);
+                    }
+                    base = matrix_multiply(base, base);
+                }
+                return result[0][1];
+            }
+            const inputElement = document.getElementById('number');
+            const resultElement = document.getElementById('result');
+            const resultdivElement = document.getElementsByClassName('result_field')[0];
+            const descriptionElement = document.getElementsByClassName('description')[0];
+            const number = parseInt(inputElement.value);
+            const fibonacciNumber = fibo(number);
+            resultElement.textContent = `${fibonacciNumber}`;
+            descriptionElement.textContent = `Result of F(${number})`
+            resultdivElement.style.border = '2px solid black';
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Noto Sans KR", sans-serif;
+        }
+        .title {
+            font-size: 60px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 150px;
+        }
+        .input_field {
+            text-align: center;
+            margin: 0 auto;
+        }
+        .result_field {
+            width: 50vw;
+            margin: 100px auto 0;
+            padding-left: 10px;
+            padding-right: 10px;
+            overflow-wrap: break-word;
+        }
+        #result {
+            align-items: center;
+            text-align: center;
+        }
+        .description_field {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <p class="title">
+        Fibonacci Calculator
+    </p>
+    <div class="input_field">
+        <label for="number">fibo(N) : </label>
+        <input type="number" id="number">
+        <button onclick="calculateFibonacci()" class="button">Calculate</button>
+    </div>
+    <div class="description_field">
+        <p class="description">
+
+        </p>
+    </div>
+    <div class="result_field">
+        <p id="result">
+
+        </p>
+    </div>
+</body>
+</html>
